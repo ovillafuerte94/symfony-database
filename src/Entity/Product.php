@@ -20,6 +20,10 @@ class Product
     #[ORM\Column(type: Types::TEXT)]
     private ?string $summary = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Metadata $metadata = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class Product
     public function setSummary(string $summary): static
     {
         $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getMetadata(): ?Metadata
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(Metadata $metadata): static
+    {
+        $this->metadata = $metadata;
 
         return $this;
     }
