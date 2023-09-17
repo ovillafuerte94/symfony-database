@@ -2,21 +2,28 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Tag;
+use App\Entity\Comment;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PageController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $tag = null;
+        
+        if ($request->get('tag')) {
+            $tag = $entityManager->getRepository(Tag::class)->findOneBy(['name' => $request->get('tag')]);
+        }
+
         return $this->render('page/index.html.twig', [
-            'products' => $entityManager->getRepository(Product::class)->findLatest(),
+            'products' => $entityManager->getRepository(Product::class)->findLatest($tag),
         ]);
     }
 

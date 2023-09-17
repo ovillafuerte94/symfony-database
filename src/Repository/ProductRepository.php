@@ -21,15 +21,19 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function findLatest(): array
+    public function findLatest($tag): array
     {
-        return $this->createQueryBuilder('p')
+        $query =  $this->createQueryBuilder('p')
             ->addSelect('comments', 'tags')
             ->leftJoin('p.comments', 'comments')
             ->leftJoin('p.tags', 'tags')
-            ->orderBy('p.id', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('p.id', 'DESC');
+
+        if ($tag) {
+            $query->setParameter('tag', $tag)->andWhere(':tag MEMBER OF p.tags');
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     public function findByTag($tag): array
