@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Tag;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +34,14 @@ class PageController extends AbstractController
     {
         return $this->render('page/product.html.twig', [
             'product' => $product
+        ]);
+    }
+
+    #[Route('/comments', name: 'app_comments')]
+    public function comments(EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('page/comments.html.twig', [
+            'comments' => $entityManager->getRepository(Comment::class)->findAll()
         ]);
     }
 }
