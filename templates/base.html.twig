@@ -12,7 +12,7 @@
         {% endblock %}
     </head>
     <body>
-        {{ include('_menu.html.twig') }}
+        {% include "_menu.html.twig" %}
 
         <div class="container">
             <div class="row">
@@ -20,7 +20,7 @@
                     {% block body %}{% endblock %}
                 </div>
                 <div class="col-md-3">
-                    {{ include('_aside.html.twig') }}
+                    {% include "_aside.html.twig" %}
                 </div>
             </div>
         </div>
