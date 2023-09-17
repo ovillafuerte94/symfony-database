@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,15 @@ class PageController extends AbstractController
     {
         return $this->render('page/index.html.twig', [
             'products' => $entityManager->getRepository(Product::class)->findAll(),
+        ]);
+    }
+
+    #[Route('/tag/{id}', name: 'app_tag')]
+    public function tag(Tag $tag): Response
+    {
+        return $this->render('page/tag.html.twig', [
+            'tag' => $tag,
+            // 'products' => $tag->getProducts()
         ]);
     }
 }

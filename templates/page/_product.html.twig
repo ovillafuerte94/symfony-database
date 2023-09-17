@@ -11,7 +11,7 @@
     {{ product.comments|length }} Comments
     |
     {% for tag in product.tags %}
-        <a href="#" class="badge bg-light text-dark text-decoration-none">
+        <a href="{{ path('app_tag', {id: tag.id}) }}" class="badge bg-light text-dark text-decoration-none">
             {{ tag.name }}
         </a>
     {% endfor %}
