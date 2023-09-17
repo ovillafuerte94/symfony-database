@@ -41,7 +41,7 @@ class PageController extends AbstractController
     public function comments(EntityManagerInterface $entityManager): Response
     {
         return $this->render('page/comments.html.twig', [
-            'comments' => $entityManager->getRepository(Comment::class)->findAll()
+            'comments' => $entityManager->getRepository(Comment::class)->findAllComments()
         ]);
     }
 }
